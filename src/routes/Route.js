@@ -1,0 +1,39 @@
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+export default function RouterWrapper({
+  component: Component,
+  isPrivate,
+  ...rest
+}) {
+  const signed = false;
+
+  if (!signed && isPrivate) {
+    return <Redirect to="/" />;
+  }
+
+  if (signed && !isPrivate) {
+    return <Redirect to="/dashboard" />;
+  }
+
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  return <Route {...rest} component={Component} />;
+}
+
+RouterWrapper.propTypes = {
+  isPrivate: PropTypes.bool,
+  component: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
+    .isRequired,
+};
+
+RouterWrapper.defaultProps = {
+  isPrivate: false,
+};
+
+// Adicionar props pra verificar se user é teleconsultor, coordenador ou regulador
+// isTeleconsultor
+// isAdministrativo
+// isCoordenador
+// Verificar se está logado e caso sim, redirecionar para seu respectivo componente
+// /teleconsutlro /coordenador /regulador
