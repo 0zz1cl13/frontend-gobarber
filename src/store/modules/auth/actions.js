@@ -13,6 +13,6 @@ export function signInSuccess(token, user) {
 }
 export function signFailure() {
   return {
-    type: '@auth/SIGN_FAILURE',
+    type: '@auth/SIGN_IN_FAILURE',
   };
 }
